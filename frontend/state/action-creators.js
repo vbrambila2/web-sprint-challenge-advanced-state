@@ -1,3 +1,4 @@
+import { number } from 'yup';
 import {
   INPUT_CHANGE,
   MOVE_CLOCKWISE,
