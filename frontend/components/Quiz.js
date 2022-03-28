@@ -31,6 +31,7 @@ export function Quiz(props) {
   console.log(infoMessage, "infoMessage");
 
   const onClickOne = () => {
+    selectAnswer(quiz.answers[0].text)
     const buttonOne = document.querySelector(".answerOne");
     const buttonTwo = document.querySelector(".answerTwo");
     if (buttonTwo.classList.contains("selected")) {
@@ -42,6 +43,7 @@ export function Quiz(props) {
   }
 
   const onClickTwo = () => {
+    selectAnswer(quiz.answers[1].text)
     const buttonOne = document.querySelector(".answerOne");
     const buttonTwo = document.querySelector(".answerTwo");
     if (buttonOne.classList.contains("selected")) {
@@ -64,19 +66,19 @@ export function Quiz(props) {
               <div className="answer answerOne">
                 { quiz ? quiz.answers[0].text : '' }
                 <button onClick={onClickOne}>
-                  Select
+                  { selectedAnswer === quiz.answers[0].text ? 'SELECTED' : 'Select' }
                 </button>
               </div>
 
               <div className="answer answerTwo">
                 { quiz ? quiz.answers[1].text : '' }
                 <button onClick={onClickTwo}>
-                  Select
+                { selectedAnswer === quiz.answers[1].text ? 'SELECTED' : 'Select' }
                 </button>
               </div>
             </div>
 
-            <button id="submitAnswerBtn">Submit answer</button>
+            <button id="submitAnswerBtn" disabled={selectedAnswer === null ? "disabled" : "" } >Submit answer</button>
           </>
         ) : 'Loading next quiz...'
       }
