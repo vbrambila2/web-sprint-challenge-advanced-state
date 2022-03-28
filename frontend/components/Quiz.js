@@ -26,6 +26,7 @@ export function Quiz(props) {
   }, [])
 
   console.log(quiz, "quiz");
+  console.log(selectedAnswer, "selected");
 
   const onClickOne = () => {
     const quizId = quiz.quiz_id;
@@ -34,11 +35,16 @@ export function Quiz(props) {
     selectAnswer({quizId, answerId, answerText})
     const buttonOne = document.querySelector(".answerOne");
     const buttonTwo = document.querySelector(".answerTwo");
+    const submitOne = document.querySelector(".submitOne");
+    const submitTwo = document.querySelector(".submitTwo");
     if (buttonTwo.classList.contains("selected")) {
       buttonTwo.classList.remove("selected")
       buttonOne.classList.add("selected")
+      submitOne.textContent = 'SELECTED'
+      submitTwo.textContent = 'Select'
     } else {
       buttonOne.classList.add("selected")
+      submitOne.textContent = 'SELECTED'
     }
   }
 
@@ -49,11 +55,16 @@ export function Quiz(props) {
     selectAnswer({quizId, answerId, answerText})
     const buttonOne = document.querySelector(".answerOne");
     const buttonTwo = document.querySelector(".answerTwo");
+    const submitOne = document.querySelector(".submitOne");
+    const submitTwo = document.querySelector(".submitTwo");
     if (buttonOne.classList.contains("selected")) {
       buttonOne.classList.remove("selected")
       buttonTwo.classList.add("selected")
+      submitOne.textContent = 'Select'
+      submitTwo.textContent = 'SELECTED'
     } else {
       buttonTwo.classList.add("selected")
+      submitTwo.textContent = 'SELECTED'
     }
   }
 
@@ -75,15 +86,15 @@ export function Quiz(props) {
             <div id="quizAnswers">
               <div className="answer answerOne">
                 { quiz ? quiz.answers[0].text : '' }
-                <button onClick={onClickOne}>
-                  { selectedAnswer === quiz.answers[0].text ? 'SELECTED' : 'Select' }
+                <button onClick={onClickOne} className="submitOne">
+                  Select
                 </button>
               </div>
 
               <div className="answer answerTwo">
                 { quiz ? quiz.answers[1].text : '' }
-                <button onClick={onClickTwo}>
-                { selectedAnswer === quiz.answers[1].text ? 'SELECTED' : 'Select' }
+                <button onClick={onClickTwo} className="submitTwo">
+                  Select
                 </button>
               </div>
             </div>
