@@ -5,7 +5,8 @@ import {
   RESET_FORM, 
   SET_INFO_MESSAGE,
   SET_QUIZ_INTO_STATE, 
-  SET_SELECTED_ANSWER
+  SET_SELECTED_ANSWER,
+  POST_ANSWER
 } from './action-types';
 
 // ❗ You don't need to add extra reducers to achieve MVP
@@ -45,7 +46,15 @@ function selectedAnswer(state = initialSelectedAnswerState, action) {
 
 const initialMessageState = ''
 function infoMessage(state = initialMessageState, action) {
-  return state
+  console.log(state, "reducer");
+  switch(action.type) {
+    case SET_INFO_MESSAGE:
+      return action.payload
+    case POST_ANSWER:
+      return state
+    default:
+      return state
+  }
 }
 
 const initialFormState = {

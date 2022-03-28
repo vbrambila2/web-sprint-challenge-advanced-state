@@ -7,16 +7,17 @@ import {
   RESET_FORM, 
   SET_INFO_MESSAGE,
   SET_QUIZ_INTO_STATE, 
-  SET_SELECTED_ANSWER
+  SET_SELECTED_ANSWER,
+  POST_ANSWER
 } from './action-types';
 // ❗ You don't need to add extra action creators to achieve MVP
 export function moveClockwise() { return { type: MOVE_CLOCKWISE, payload: 1 } }
   
 export function moveCounterClockwise() { return { type: MOVE_COUNTERCLOCKWISE, payload: 1 } }
 
-export function selectAnswer(answer) { return { type: SET_SELECTED_ANSWER, payload: answer } }
+export function selectAnswer({quizId, answerId, answerText}) { return { type: SET_SELECTED_ANSWER, payload: {quizId, answerId, answerText} } }
 
-export function setMessage() { }
+export function setMessage() { return { type: POST_ANSWER } }
 
 export function setQuiz() { }
 
@@ -39,8 +40,14 @@ export function fetchQuiz() {
     
   
 }
-export function postAnswer() {
+export function postAnswer({ quiz_id, answer_id }) {
   return function (dispatch) {
+    axios.post('http://localhost:9000/api/quiz/answer', { quiz_id, answer_id })
+      .then(res => {
+        console.log(res.data.message, "res")
+        dispatch({ type: SET_INFO_MESSAGE, payload: res.data.message })
+        //dispatch({ type: POST_ANSWER, payload: { selectedQuizId, selectedAnswerId } })
+      })
     // On successful POST:
     // - Dispatch an action to reset the selected answer state
     // - Dispatch an action to set the server message to state

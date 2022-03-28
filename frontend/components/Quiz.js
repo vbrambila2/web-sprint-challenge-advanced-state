@@ -13,7 +13,7 @@ export function Quiz(props) {
   const { 
     quiz, 
     selectedAnswer,
-    infoMessage,
+    //infoMessage,
     selectAnswer, 
     setQuiz,
     setMessage,
@@ -28,10 +28,13 @@ export function Quiz(props) {
 
   console.log(quiz, "quiz");
   console.log(selectedAnswer, "selectedAnswer");
-  console.log(infoMessage, "infoMessage");
+  //console.log(infoMessage ? infoMessage : "nothing", "infoMessage");
 
   const onClickOne = () => {
-    selectAnswer(quiz.answers[0].text)
+    const quizId = quiz.quiz_id;
+    const answerId = quiz.answers[0].answer_id;
+    const answerText = quiz.answers[0].text
+    selectAnswer({quizId, answerId, answerText})
     const buttonOne = document.querySelector(".answerOne");
     const buttonTwo = document.querySelector(".answerTwo");
     if (buttonTwo.classList.contains("selected")) {
@@ -43,7 +46,10 @@ export function Quiz(props) {
   }
 
   const onClickTwo = () => {
-    selectAnswer(quiz.answers[1].text)
+    const quizId = quiz.quiz_id;
+    const answerId = quiz.answers[1].answer_id;
+    const answerText = quiz.answers[1].text
+    selectAnswer({quizId, answerId, answerText})
     const buttonOne = document.querySelector(".answerOne");
     const buttonTwo = document.querySelector(".answerTwo");
     if (buttonOne.classList.contains("selected")) {
@@ -52,6 +58,12 @@ export function Quiz(props) {
     } else {
       buttonTwo.classList.add("selected")
     }
+  }
+
+  const submitAnswer = () => {
+    const quiz_id = selectedAnswer.quizId;
+    const answer_id = selectedAnswer.answerId;
+    postAnswer({ quiz_id, answer_id });
   }
 
   return (
@@ -78,7 +90,13 @@ export function Quiz(props) {
               </div>
             </div>
 
-            <button id="submitAnswerBtn" disabled={selectedAnswer === null ? "disabled" : "" } >Submit answer</button>
+            <button 
+              id="submitAnswerBtn" 
+              disabled={selectedAnswer === null ? "disabled" : "" } 
+              onClick={submitAnswer}
+              >
+                Submit answer
+              </button>
           </>
         ) : 'Loading next quiz...'
       }
@@ -90,7 +108,7 @@ const mapStateToProps = state => {
   return {
     quiz: state.quiz,
     selectedAnswer: state.selectedAnswer,
-    infoMessage: state.infoMessage
+    //infoMessage: state.infoMessage
   }
 }
 
