@@ -6,7 +6,8 @@ import {
   SET_INFO_MESSAGE,
   SET_QUIZ_INTO_STATE, 
   SET_SELECTED_ANSWER,
-  POST_ANSWER
+  POST_MESSAGE,
+  SET_QUIZ_INITIAL
 } from './action-types';
 
 // ❗ You don't need to add extra reducers to achieve MVP
@@ -29,6 +30,8 @@ function quiz(state = initialQuizState, action) {
   switch(action.type) {
     case SET_QUIZ_INTO_STATE:
       return action.payload
+    case SET_QUIZ_INITIAL:
+      return initialQuizState
     default:
       return state
   }
@@ -50,7 +53,7 @@ function infoMessage(state = initialMessageState, action) {
   switch(action.type) {
     case SET_INFO_MESSAGE:
       return action.payload
-    case POST_ANSWER:
+    case POST_MESSAGE:
       return state
     default:
       return state

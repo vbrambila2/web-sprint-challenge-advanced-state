@@ -16,7 +16,6 @@ export function Quiz(props) {
     //infoMessage,
     selectAnswer, 
     setQuiz,
-    setMessage,
     fetchQuiz,
     postQuiz,
     postAnswer  
@@ -27,8 +26,6 @@ export function Quiz(props) {
   }, [])
 
   console.log(quiz, "quiz");
-  console.log(selectedAnswer, "selectedAnswer");
-  //console.log(infoMessage ? infoMessage : "nothing", "infoMessage");
 
   const onClickOne = () => {
     const quizId = quiz.quiz_id;
@@ -64,6 +61,7 @@ export function Quiz(props) {
     const quiz_id = selectedAnswer.quizId;
     const answer_id = selectedAnswer.answerId;
     postAnswer({ quiz_id, answer_id });
+    fetchQuiz();
   }
 
   return (
@@ -108,7 +106,6 @@ const mapStateToProps = state => {
   return {
     quiz: state.quiz,
     selectedAnswer: state.selectedAnswer,
-    //infoMessage: state.infoMessage
   }
 }
 

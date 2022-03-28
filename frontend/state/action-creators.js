@@ -8,7 +8,8 @@ import {
   SET_INFO_MESSAGE,
   SET_QUIZ_INTO_STATE, 
   SET_SELECTED_ANSWER,
-  POST_ANSWER
+  POST_MESSAGE,
+  SET_QUIZ_INITIAL
 } from './action-types';
 // ❗ You don't need to add extra action creators to achieve MVP
 export function moveClockwise() { return { type: MOVE_CLOCKWISE, payload: 1 } }
@@ -17,7 +18,7 @@ export function moveCounterClockwise() { return { type: MOVE_COUNTERCLOCKWISE, p
 
 export function selectAnswer({quizId, answerId, answerText}) { return { type: SET_SELECTED_ANSWER, payload: {quizId, answerId, answerText} } }
 
-export function setMessage() { return { type: POST_ANSWER } }
+export function setMessage() { return { type: POST_MESSAGE } }
 
 export function setQuiz() { }
 
@@ -28,6 +29,7 @@ export function resetForm() { }
 // ❗ Async action creators
 export function fetchQuiz() {
   return function (dispatch) {
+    dispatch({ type: SET_QUIZ_INITIAL })
     axios.get('http://localhost:9000/api/quiz/next')
         .then(res => {
           dispatch({ type: SET_QUIZ_INTO_STATE, payload: res.data })
