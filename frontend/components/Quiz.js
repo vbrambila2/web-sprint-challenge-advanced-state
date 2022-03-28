@@ -1,25 +1,76 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { 
+  selectAnswer, 
+  setQuiz,
+  setMessage,
+  fetchQuiz,
+  postQuiz,
+  postAnswer 
+} from '../state/action-creators';
 
-export default function Quiz(props) {
+export function Quiz(props) {
+  const { 
+    quiz, 
+    selectedAnswer,
+    infoMessage,
+    selectAnswer, 
+    setQuiz,
+    setMessage,
+    fetchQuiz,
+    postQuiz,
+    postAnswer  
+  } = props;
+
+  useEffect(() => {
+    fetchQuiz();
+  }, [])
+
+  console.log(quiz, "quiz");
+  console.log(selectedAnswer, "selectedAnswer");
+  console.log(infoMessage, "infoMessage");
+
+  const onClickOne = () => {
+    const buttonOne = document.querySelector(".answerOne");
+    const buttonTwo = document.querySelector(".answerTwo");
+    if (buttonTwo.classList.contains("selected")) {
+      buttonTwo.classList.remove("selected")
+      buttonOne.classList.add("selected")
+    } else {
+      buttonOne.classList.add("selected")
+    }
+  }
+
+  const onClickTwo = () => {
+    const buttonOne = document.querySelector(".answerOne");
+    const buttonTwo = document.querySelector(".answerTwo");
+    if (buttonOne.classList.contains("selected")) {
+      buttonOne.classList.remove("selected")
+      buttonTwo.classList.add("selected")
+    } else {
+      buttonTwo.classList.add("selected")
+    }
+  }
+
   return (
     <div id="wrapper">
       {
         // quiz already in state? Let's use that, otherwise render "Loading next quiz..."
-        true ? (
+        quiz ? (
           <>
-            <h2>What is a closure?</h2>
+            <h2>{ quiz ? quiz.question : '' }</h2>
 
             <div id="quizAnswers">
-              <div className="answer selected">
-                A function
-                <button>
-                  SELECTED
+              <div className="answer answerOne">
+                { quiz ? quiz.answers[0].text : '' }
+                <button onClick={onClickOne}>
+                  Select
                 </button>
               </div>
 
-              <div className="answer">
-                An elephant
-                <button>
+              <div className="answer answerTwo">
+                { quiz ? quiz.answers[1].text : '' }
+                <button onClick={onClickTwo}>
                   Select
                 </button>
               </div>
@@ -32,3 +83,20 @@ export default function Quiz(props) {
     </div>
   )
 }
+
+const mapStateToProps = state => {
+  return {
+    quiz: state.quiz,
+    selectedAnswer: state.selectedAnswer,
+    infoMessage: state.infoMessage
+  }
+}
+
+export default connect(mapStateToProps, {
+  selectAnswer, 
+  setQuiz,
+  setMessage,
+  fetchQuiz,
+  postQuiz,
+  postAnswer 
+})(Quiz)

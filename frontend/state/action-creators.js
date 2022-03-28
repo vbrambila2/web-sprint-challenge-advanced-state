@@ -1,4 +1,5 @@
 import { number } from 'yup';
+import axios from 'axios';
 import {
   INPUT_CHANGE,
   MOVE_CLOCKWISE,
@@ -26,10 +27,17 @@ export function resetForm() { }
 // ❗ Async action creators
 export function fetchQuiz() {
   return function (dispatch) {
+    axios.get('http://localhost:9000/api/quiz/next')
+        .then(res => {
+          dispatch({ type: SET_QUIZ_INTO_STATE, payload: res.data })
+        })
+        .catch(err => console.error(err))
+    }
     // First, dispatch an action to reset the quiz state (so the "Loading next quiz..." message can display)
     // On successful GET:
     // - Dispatch an action to send the obtained quiz to its state
-  }
+    
+  
 }
 export function postAnswer() {
   return function (dispatch) {
