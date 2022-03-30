@@ -3,18 +3,18 @@ import { connect } from 'react-redux';
 import { setMessage } from '../state/action-creators';
 
 export function Message(props) {
-  const { infoMessage } = props;
-  console.log(infoMessage, "info");
+  const { infoMessage, form } = props;
 
   useEffect(() => [
     setMessage()
   ], [])
 
-  return <div id="message">{ infoMessage }</div>
+  return <div id="message">{ form.question ? `Congrats: "${form.question}" is a great question!` : infoMessage }</div>
 }
 
 const mapStateToProps = state => {
   return {
+    form: state.form,
     infoMessage: state.infoMessage
   }
 }

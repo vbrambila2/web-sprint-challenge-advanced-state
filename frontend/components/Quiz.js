@@ -2,10 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { 
   selectAnswer, 
-  setQuiz,
-  setMessage,
   fetchQuiz,
-  postQuiz,
   postAnswer 
 } from '../state/action-creators';
 
@@ -13,20 +10,14 @@ export function Quiz(props) {
   const { 
     quiz, 
     selectedAnswer,
-    //infoMessage,
     selectAnswer, 
-    setQuiz,
     fetchQuiz,
-    postQuiz,
     postAnswer  
   } = props;
 
   useEffect(() => {
     fetchQuiz();
   }, [])
-
-  console.log(quiz, "quiz");
-  console.log(selectedAnswer, "selected");
 
   const onClickOne = () => {
     const quizId = quiz.quiz_id;
@@ -122,9 +113,6 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
   selectAnswer, 
-  setQuiz,
-  setMessage,
   fetchQuiz,
-  postQuiz,
   postAnswer 
 })(Quiz)

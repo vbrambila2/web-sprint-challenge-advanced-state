@@ -1,24 +1,52 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import * as actionCreators from '../state/action-creators'
 
 export function Form(props) {
+  const [input, setInput] = useState('') 
+  const [isdisabled, setIsDisabled] = useState(true) 
+  const { form, inputChange, postQuiz } = props;
 
   const onChange = evt => {
+    //setInput((prevState) => (evt.target.value))
+    const question_text_input = document.getElementById("newQuestion");
+    const newQuestion = question_text_input.value
+    const true_answer_text_input = document.getElementById("newTrueAnswer");
+    const newTrueAnswer = true_answer_text_input.value
+    const false_answer_text_input = document.getElementById("newFalseAnswer");
+    const newFalseAnswer = false_answer_text_input.value
+    inputChange({ newQuestion, newTrueAnswer, newFalseAnswer })
 
+    if (evt.target.value.trim().length < 1) {
+      setIsDisabled(true) 
+    } else {
+      setIsDisabled(false)
+    }
   }
 
   const onSubmit = evt => {
-
+    evt.preventDefault()
+    const question_text_input = document.getElementById("newQuestion");
+    const question_text = question_text_input.value
+    const true_answer_text_input = document.getElementById("newTrueAnswer");
+    const true_answer_text = true_answer_text_input.value
+    const false_answer_text_input = document.getElementById("newFalseAnswer");
+    const false_answer_text = false_answer_text_input.value
+    postQuiz({ question_text, true_answer_text, false_answer_text })
   }
 
   return (
     <form id="form" onSubmit={onSubmit}>
       <h2>Create New Quiz</h2>
-      <input maxLength={50} onChange={onChange} id="newQuestion" placeholder="Enter question" />
-      <input maxLength={50} onChange={onChange} id="newTrueAnswer" placeholder="Enter true answer" />
-      <input maxLength={50} onChange={onChange} id="newFalseAnswer" placeholder="Enter false answer" />
-      <button id="submitNewQuizBtn">Submit new quiz</button>
+      <input value={form.newQuestion ? form.newQuestion : ""} maxLength={50} onChange={onChange} id="newQuestion" placeholder="Enter question" />
+      <input value={form.newTrueAnswer ? form.newTrueAnswer : ""} maxLength={50} onChange={onChange} id="newTrueAnswer" placeholder="Enter true answer" />
+      <input value={form.newFalseAnswer ? form.newFalseAnswer : ""} maxLength={50} onChange={onChange} id="newFalseAnswer" placeholder="Enter false answer" />
+      <button 
+      id="submitNewQuizBtn"
+      disabled={isdisabled}
+      >
+        Submit new quiz
+      </button>
     </form>
   )
 }

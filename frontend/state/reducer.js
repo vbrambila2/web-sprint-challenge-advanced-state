@@ -7,7 +7,8 @@ import {
   SET_QUIZ_INTO_STATE, 
   SET_SELECTED_ANSWER,
   POST_MESSAGE,
-  SET_QUIZ_INITIAL
+  SET_QUIZ_INITIAL,
+  POST_NEW_QUIZ
 } from './action-types';
 
 // ❗ You don't need to add extra reducers to achieve MVP
@@ -49,7 +50,6 @@ function selectedAnswer(state = initialSelectedAnswerState, action) {
 
 const initialMessageState = ''
 function infoMessage(state = initialMessageState, action) {
-  console.log(state, "reducer");
   switch(action.type) {
     case SET_INFO_MESSAGE:
       return action.payload
@@ -66,7 +66,16 @@ const initialFormState = {
   newFalseAnswer: '',
 }
 function form(state = initialFormState, action) {
-  return state
+  switch(action.type) {
+    case INPUT_CHANGE:
+      return action.payload
+    case POST_NEW_QUIZ:
+      return action.payload
+    case RESET_FORM:
+      return {initialFormState}
+    default:
+      return state
+  }
 }
 
 export default combineReducers({ wheel, quiz, selectedAnswer, infoMessage, form })
