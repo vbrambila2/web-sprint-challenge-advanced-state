@@ -4,11 +4,12 @@ import * as actionCreators from '../state/action-creators'
 
 export function Form(props) {
   const [input, setInput] = useState('') 
-  const [isdisabled, setIsDisabled] = useState(true) 
+  const [disabled, setDisabled] = useState(true) 
   const { form, inputChange, postQuiz } = props;
 
   const onChange = evt => {
-    //setInput((prevState) => (evt.target.value))
+    setInput(evt.target.value)
+    
     const question_text_input = document.getElementById("newQuestion");
     const newQuestion = question_text_input.value
     const true_answer_text_input = document.getElementById("newTrueAnswer");
@@ -16,11 +17,14 @@ export function Form(props) {
     const false_answer_text_input = document.getElementById("newFalseAnswer");
     const newFalseAnswer = false_answer_text_input.value
     inputChange({ newQuestion, newTrueAnswer, newFalseAnswer })
-
-    if (evt.target.value.trim().length < 1) {
-      setIsDisabled(true) 
+    if (newFalseAnswer.trim().length === 0) {
+      setDisabled(true) 
+    } else if (newTrueAnswer.trim().length === 0) {
+      setDisabled(true) 
+    } else if (newQuestion.trim().length === 0) {
+      setDisabled(true) 
     } else {
-      setIsDisabled(false)
+      setDisabled(false)
     }
   }
 
@@ -43,7 +47,7 @@ export function Form(props) {
       <input value={form.newFalseAnswer ? form.newFalseAnswer : ""} maxLength={50} onChange={onChange} id="newFalseAnswer" placeholder="Enter false answer" />
       <button 
       id="submitNewQuizBtn"
-      disabled={isdisabled}
+      disabled={disabled}
       >
         Submit new quiz
       </button>
