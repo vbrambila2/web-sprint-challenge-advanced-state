@@ -3,13 +3,10 @@ import { connect } from 'react-redux'
 import * as actionCreators from '../state/action-creators'
 
 export function Form(props) {
-  const [input, setInput] = useState('') 
   const [disabled, setDisabled] = useState(true) 
   const { form, inputChange, postQuiz } = props;
 
-  const onChange = evt => {
-    setInput(evt.target.value)
-    
+  const onChange = () => {
     const question_text_input = document.getElementById("newQuestion");
     const newQuestion = question_text_input.value
     const true_answer_text_input = document.getElementById("newTrueAnswer");

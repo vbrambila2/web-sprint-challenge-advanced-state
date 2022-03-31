@@ -16,7 +16,7 @@ export function Quiz(props) {
   } = props;
 
   useEffect(() => {
-    fetchQuiz();
+    quiz ? null : fetchQuiz();
   }, [])
 
   const onClickOne = () => {

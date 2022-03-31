@@ -10,7 +10,8 @@ import {
   SET_SELECTED_ANSWER,
   POST_MESSAGE,
   SET_QUIZ_INITIAL,
-  POST_NEW_QUIZ
+  POST_NEW_QUIZ,
+  NEW_QUIZ_MESSAGE
 } from './action-types';
 // ❗ You don't need to add extra action creators to achieve MVP
 export function moveClockwise() { return { type: MOVE_CLOCKWISE, payload: 1 } }
@@ -67,6 +68,7 @@ export function postQuiz({ question_text, true_answer_text, false_answer_text })
     axios.post('http://localhost:9000/api/quiz/new', { question_text, true_answer_text, false_answer_text })
       .then(res => {
         dispatch({ type: POST_NEW_QUIZ, payload: res.data })
+        dispatch({ type: NEW_QUIZ_MESSAGE, payload: `Congrats: "${question_text}" is a great question!` })
       })
     // On successful POST:
     // - Dispatch the correct message to the the appropriate state

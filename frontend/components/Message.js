@@ -9,7 +9,9 @@ export function Message(props) {
     setMessage()
   ], [])
 
-  return <div id="message">{ form.question ? `Congrats: "${form.question}" is a great question!` : infoMessage }</div>
+  console.log(infoMessage);
+
+  return <div id="message">{infoMessage }</div>
 }
 
 const mapStateToProps = state => {

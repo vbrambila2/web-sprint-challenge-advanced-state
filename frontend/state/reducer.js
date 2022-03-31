@@ -8,7 +8,8 @@ import {
   SET_SELECTED_ANSWER,
   POST_MESSAGE,
   SET_QUIZ_INITIAL,
-  POST_NEW_QUIZ
+  POST_NEW_QUIZ,
+  NEW_QUIZ_MESSAGE
 } from './action-types';
 
 // ❗ You don't need to add extra reducers to achieve MVP
@@ -53,6 +54,8 @@ function infoMessage(state = initialMessageState, action) {
   switch(action.type) {
     case SET_INFO_MESSAGE:
       return action.payload
+    case NEW_QUIZ_MESSAGE:
+      return action.payload
     case POST_MESSAGE:
       return state
     default:
@@ -72,7 +75,7 @@ function form(state = initialFormState, action) {
     case POST_NEW_QUIZ:
       return action.payload
     case RESET_FORM:
-      return {initialFormState}
+      return initialFormState
     default:
       return state
   }

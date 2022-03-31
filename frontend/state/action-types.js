@@ -9,3 +9,4 @@ export const RESET_FORM = 'RESET_FORM'
 export const POST_MESSAGE = 'POST_MESSAGE'
 export const SET_QUIZ_INITIAL = 'SET_QUIZ_INITIAL'
 export const POST_NEW_QUIZ = 'POST_NEW_QUIZ'
+export const NEW_QUIZ_MESSAGE ="NEW_QUIZ_MESSAGE"
